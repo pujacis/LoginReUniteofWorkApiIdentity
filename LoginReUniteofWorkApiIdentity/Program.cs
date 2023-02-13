@@ -1,8 +1,13 @@
 using DataAccessLayer.DataContext;
+using DataAccessLayer.Repository;
+using DataAccessLayer.ServiceExtension;
+using InterfaceEntity.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Services;
+using Services.Interfaces;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,8 +17,18 @@ var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 
 // For Entity Framework
-builder.Services.AddDbContext<DataAccessLayerContext>(options => options.UseSqlServer(configuration.GetConnectionString("conn")));
+//builder.Services.AddDbContext<DataAccessLayerContext>(options => options.UseSqlServer(configuration.GetConnectionString("conn")));
 // For Identity
+
+
+//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+//builder.Services.AddScoped<ITaskPersonRepository, TaskPersonRepository>();
+
+// Add services to the container.
+builder.Services.AddDIServices(builder.Configuration);
+builder.Services.AddScoped<ITaskpersonService, PersonService>();
+
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<DataAccessLayerContext>()
     .AddDefaultTokenProviders();

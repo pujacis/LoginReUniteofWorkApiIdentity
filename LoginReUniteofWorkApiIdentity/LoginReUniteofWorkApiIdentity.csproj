@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DataContext\DataAccessLayer.csproj" />
     <ProjectReference Include="..\Handler\Handler.csproj" />
+    <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
 </Project>
